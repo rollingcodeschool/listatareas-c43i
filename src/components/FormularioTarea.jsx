@@ -4,11 +4,23 @@ import { useEffect, useState } from "react";
 
 const FormularioTarea = () => {
   const [tarea, setTarea] = useState("");
-  const [listaTareas, setListaTareas] = useState([]);
+  let tareasLocalStorage = JSON.parse(localStorage.getItem('listaTareas')) || [];
+  const [listaTareas, setListaTareas] = useState(tareasLocalStorage);
 
-  useEffect(()=>{
-    console.log('esto fue ejecutado con useEffect')
+  // esta version de useEffect se ejecuta en montaje y actualizacion del state listaTareas
+   useEffect(()=>{
+    localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
   }, [listaTareas])
+
+  // esta version de useEffect se ejecuta en montaje y actualizacion de todos los estados
+  // useEffect(()=>{
+  //   console.log('esto fue ejecutado con useEffect')
+  // })
+  
+  // Solo quiero usar useeffect en montaje 
+  // useEffect(()=>{
+  // //  la logica que quiera ejecutar
+  // }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
